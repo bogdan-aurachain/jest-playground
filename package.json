@@ -5,11 +5,12 @@
     "scripts": {
         "serve": "vue-cli-service serve",
         "build": "vue-cli-service build",
-        "test:unit": "vue-cli-service test:unit",
+        "test:unit": "vue-cli-service test:unit --watch",
         "lint": "vue-cli-service lint"
     },
     "dependencies": {
         "@quasar/extras": "^1.0.0",
+        "axios": "^0.24.0",
         "core-js": "^3.6.5",
         "quasar": "^1.0.0",
         "vue": "^2.6.11",

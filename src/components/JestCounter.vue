@@ -7,8 +7,13 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     name: "JestCounter",
+    props: {
+        test: { type: Number, default: 0 }
+    },
     data() {
         return {
             count: 0
@@ -25,6 +30,24 @@ export default {
             if (this.checkAboveZero()) {
                 this.count -= 1;
             }
+        },
+        async transformObject() {
+            const transform = (objectData) => {
+                const newObject = {};
+                Object.entries(objectData).forEach(([key, value]) => {
+                    if (value === "xxx") {
+                        newObject[`v_${key}`] = value;
+                    } else {
+                        newObject[`m_${key}`] = value;
+                    }
+                });
+
+                return newObject;
+            };
+
+            const { data } = await axios.get("https://jsonplaceholder.typicode.com/todos/1");
+            // const { data } = await axios({ method: "get", url: "https://jsonplaceholder.typicode.com/todos/1" });
+            return transform(data);
         }
     }
 };

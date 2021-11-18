@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing Jest Parent component check html method 1`] = `
+<div
+  class="bg-blue-1"
+>
+  <div
+    class="col-12 full-width"
+  >
+    PARENT
+  </div>
+   
+  <div
+    class="col-12 full-width q-ma-md bg-red-1"
+  >
+    <div>
+      <div>
+        CHILD
+      </div>
+    </div>
+  </div>
+</div>
+`;
