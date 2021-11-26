@@ -26,7 +26,7 @@ export default {
         doInc() {
             this.count += 1;
             this.$store.commit("incCount");
-            this.$store.commit("incCount");
+            this.$emit("wasIncremented", this.count);
         },
         doDec() {
             if (this.checkAboveZero()) {

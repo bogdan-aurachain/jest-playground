@@ -50,6 +50,17 @@ describe("JestCounter.vue", () => {
         expect(mutations.incCount).toBeCalledTimes(1);
     });
 
+    it("emits wasIncremented on click", async () => {
+        const buttons = wrapper.findAll("button");
+
+        await buttons.at(0).trigger("click");
+        // expect(mutations.incCount).toBeCalled();
+        // expect(mutations.incCount).toBeCalledTimes(1);
+        // expect(wrapper.emitted().wasIncremented).toBeTruthy();
+        // console.log(wrapper.emitted("wasIncremented")[0]).;
+        expect(wrapper.emitted("wasIncremented")[0][0]).toEqual(1);
+    });
+
     it("update the count", async () => {
         const buttons = wrapper.findAll("button");
         // const dummyInc = jest.fn();
