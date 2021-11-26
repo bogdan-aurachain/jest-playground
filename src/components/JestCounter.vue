@@ -25,10 +25,13 @@ export default {
         },
         doInc() {
             this.count += 1;
+            this.$store.commit("incCount");
+            this.$store.commit("incCount");
         },
         doDec() {
             if (this.checkAboveZero()) {
                 this.count -= 1;
+                this.$store.commit("decCount");
             }
         },
         async transformObject() {

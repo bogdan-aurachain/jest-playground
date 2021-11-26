@@ -1,6 +1,10 @@
-import { mount } from "@vue/test-utils";
+import { mount, createLocalVue } from "@vue/test-utils";
 import axios from "axios";
+import Vuex from "vuex";
 import JestCounter from "@/components/JestCounter.vue";
+
+const localVue = createLocalVue();
+localVue.use(Vuex);
 
 // jest.mock("axios", () => ({
 //     __esModule: true,
@@ -11,13 +15,22 @@ import JestCounter from "@/components/JestCounter.vue";
 // }));
 
 describe("JestCounter.vue", () => {
-    let wrapper;
+    let wrapper, store, mutations;
+
     beforeEach(() => {
-        wrapper = mount(JestCounter, {
-            propsData: {
-                test: 1
-            }
-        });
+        mutations = {
+            incCount: jest.fn(),
+            decCount: jest.fn()
+        };
+
+        store = new Vuex.Store({ mutations });
+        wrapper = mount(JestCounter, { localVue, store });
+
+        // wrapper = mount(JestCounter, {
+        //     propsData: {
+        //         test: 1
+        //     }
+        // });
     });
 
     it("renders", () => {
@@ -29,6 +42,14 @@ describe("JestCounter.vue", () => {
         expect(wrapper.vm.count).toBe(0);
     });
 
+    it("calls the store mutation", async () => {
+        const buttons = wrapper.findAll("button");
+
+        await buttons.at(0).trigger("click");
+        // expect(mutations.incCount).toBeCalled();
+        expect(mutations.incCount).toBeCalledTimes(1);
+    });
+
     it("update the count", async () => {
         const buttons = wrapper.findAll("button");
         // const dummyInc = jest.fn();
@@ -38,8 +59,9 @@ describe("JestCounter.vue", () => {
         // });
 
         await buttons.at(0).trigger("click");
+
         // expect(dummyInc).toBeCalled();
-        // expect(wrapper.find(".jc__label").text()).toBe("1");
+        expect(wrapper.find(".jc__label").text()).toBe("1");
         expect(wrapper.vm.count).toBe(1);
 
         await buttons.at(1).trigger("click");
